@@ -1,2 +1,3 @@
-# polex
-Aplicativo de carons para alunos da USP
+# Pollex
+
+An app for community hitchhiking
