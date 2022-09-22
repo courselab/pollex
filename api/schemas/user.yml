@@ -1,0 +1,68 @@
+properties:
+  id:
+    type: number
+    description: user ID (USP number)
+  name: 
+    type: string
+    description: user's full name
+  nickname:
+    type: string
+    description: user's nickname
+  isDriver: 
+    type: boolean
+    description: true if the user is also a driver
+  driverStats:
+    description: user's stats as a driver (included only if isDriver is true)
+    properties:
+      ratingAvg: 
+        description: average rating
+        type: number
+      ratingCount: 
+        description: total number of ratings
+        type: number
+      tripCount: 
+        description: total number of trips
+        type: number
+    required:
+      - ratingAvg
+      - ratingCount
+      - tripCount
+  passengerStats:
+    description: user's stats as a passenger
+    properties:
+      ratingAvg: 
+        description: average rating
+        type: number
+      ratingCount: 
+        description: total number of ratings
+        type: number
+      tripCount: 
+        description: total number of trips
+        type: number
+    required:
+      - ratingAvg
+      - ratingCount
+      - tripCount
+  car:
+    nullable: true
+    description: user's car info (included only if isDriver is true)
+    properties:
+      model: 
+        description: make and model of the car
+        type: string
+      color: 
+        description: color of the car
+        type: string
+      licensePlate: 
+        description: license plate of the car
+        type: string
+    required:
+      - model
+      - color
+      - licensePlate
+required:
+ - id
+ - name
+ - nickname
+ - isDriver
+ - passengerStats
