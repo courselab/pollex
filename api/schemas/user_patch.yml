@@ -1,0 +1,29 @@
+anyOf:
+  - properties:
+      name: 
+        type: string
+        description: user's full name
+  - properties:
+      nickname:
+        type: string
+        description: user's nickname
+  - properties:
+      isDriver: 
+        type: boolean
+        description: true if the user is also a driver
+  - properties:
+      car:
+        description: user's car info
+        anyOf: 
+          - properties:
+              model: 
+                description: make and model of the car
+                type: string
+          - properties:
+              color: 
+                description: color of the car
+                type: string
+          - properties:
+              licensePlate: 
+                description: license plate of the car
+                type: string

@@ -1,0 +1,49 @@
+
+get:
+  summary: Get current user info
+  description: Get current user info
+  operationId: getUser
+  tags:
+    - User
+  responses:
+    '200':
+      description: Success.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/user.yml'
+    '401':
+      $ref: ../../responses/401.yml
+    '403':
+      $ref: ../../responses/403.yml
+patch:
+  summary: Update current user info
+  description: Update current user info
+  operationId: patchUser
+  tags:
+    - User
+  requestBody: 
+    content:
+      application/json:
+        schema: 
+          $ref: '../../schemas/user_patch.yml'
+  responses:
+    '200':
+      description: Success.
+    '401':
+      $ref: ../../responses/401.yml
+    '403':
+      $ref: ../../responses/403.yml
+delete:
+  summary: Delete account
+  description: Delete account
+  operationId: deleteUser
+  tags:
+    - User
+  responses:
+    '200':
+      description: Success.
+    '401':
+      $ref: ../../responses/401.yml
+    '403':
+      $ref: ../../responses/403.yml
