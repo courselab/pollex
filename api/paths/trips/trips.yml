@@ -1,0 +1,38 @@
+get:
+  summary: Get list of trips
+  description: Returns a list of trips from the database. For a user, list will contain only trips they participated as a passenger or driver.
+  operationId: listTrips
+  tags: 
+    -  Trips
+  parameters: 
+    - name: user
+      in: query
+      description: user ID to filter by
+      schema: 
+        type: integer
+    - name: detailed
+      in: query
+      description: if true, return full trip data for each item; if false, return only the ID.
+      schema: 
+        type: boolean
+    - $ref: ../../schemas/parameter_count.yml
+    - $ref: ../../schemas/parameter_offset.yml
+  responses:
+    200:
+      description: Ok
+      content:
+        application/json:
+          schema: 
+            oneOf: 
+              - type: array
+                items:
+                  type: number
+                description: Array of trip IDs (if detailed = false)
+              - type: array
+                items:
+                  $ref: '../../schemas/trip.yml'
+                description: Array of trip data (if detailed = true)
+    401:
+      $ref: ../../responses/401.yml
+    403:
+      $ref: ../../responses/403.yml

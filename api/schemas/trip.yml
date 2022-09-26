@@ -1,0 +1,48 @@
+properties:
+  id:
+    type: integer
+  seat:
+    type: integer
+  driver:
+    properties:
+      id:
+        description: user ID (USP number)
+        type: integer
+      name: 
+        description: user's full name
+        type: string
+      nickname:
+        description: user's nickname
+        type: string
+  passenger:
+    description: Passenger's ID
+    type: integer
+  start:
+    description: ID of starting locations
+    type: integer
+  end:
+    description: ID of final location
+    type: integer
+  when:
+    type: string
+    format: date-time
+  status:
+    type: string
+    enum:
+      - "pending"
+      - "accepted"
+      - "rejected"
+      - "cancelled"
+      - "finished"
+  driverRating:
+    description: Rating given by the driver
+    type: number
+    nullable: true
+    minimum: 0
+    maximum: 5
+  passengerRating:
+    description: Rating given by the passenger
+    type: number
+    nullable: true
+    minimum: 0
+    maximum: 5

@@ -11,3 +11,7 @@ servers:
 paths:
   /user:
     $ref: 'paths/user/user.yml'
+  /trips:
+    $ref: 'paths/trips/trips.yml'
+  /trips/{id}:
+    $ref: 'paths/trips/trip_id.yml'

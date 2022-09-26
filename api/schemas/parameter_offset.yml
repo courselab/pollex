@@ -1,0 +1,5 @@
+name: offset
+in: query
+description: Index of first returned item
+schema: 
+  type: integer

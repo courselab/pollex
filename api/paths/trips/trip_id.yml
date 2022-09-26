@@ -1,0 +1,21 @@
+get:
+  summary: Get trip data by ID
+  operationId: getTrip
+  tags: 
+    -  Trips
+  parameters:
+    - name: id
+      in: path
+      schema: 
+        type: number
+  responses: 
+    200:
+      description: Ok
+      content: 
+        application/json:
+          schema:
+            $ref: '../../schemas/trip.yml'
+    401:
+      $ref: ../../responses/401.yml
+    403:
+      $ref: ../../responses/403.yml
