@@ -2,15 +2,14 @@ package main
 
 import (
   "fmt"
-  "net/http"
   "log"
   "github.com/gin-gonic/gin"
+  "pollex/backend/handlers"
 )
 
 func main() {
-  Router.GET("/ping", func(c *gin.Context) {
-    c.String(http.StatusOK, "pong")
-  })
+  router := gin.Default()
+  handlers.SetRoutes(router)
   fmt.Println("Starting server on http://localhost:8080")
-  log.Fatal(Router.Run(":8080"))
+  log.Fatal(router.Run(":8080"))
 }
