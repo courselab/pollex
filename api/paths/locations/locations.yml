@@ -1,0 +1,23 @@
+get:
+  summary: Get list of locations
+  description: Returns a list of locations from the database
+  operationId: listLocations
+  tags: 
+    -  Locations
+  parameters: 
+    - $ref: ../../schemas/parameter_count.yml
+    - $ref: ../../schemas/parameter_offset.yml
+  responses:
+    200:
+      description: Ok
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/location.yml'
+            description: Array of trip data (if detailed = true)
+    401:
+      $ref: ../../responses/401.yml
+    403:
+      $ref: ../../responses/403.yml

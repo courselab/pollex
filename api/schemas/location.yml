@@ -1,0 +1,12 @@
+properties: 
+  id:
+    type: integer
+  name:
+    type: string
+  coords:
+    description: Geographical coordinates of the location
+    type: string
+  thumbnail:
+    description: URI of the thumbnail resource
+    type: string
+    format: uri
