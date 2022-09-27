@@ -1,6 +1,6 @@
 properties:
   id:
-    type: number
+    type: integer
     description: user ID (USP number)
   name: 
     type: string
@@ -44,7 +44,6 @@ properties:
       - ratingCount
       - tripCount
   car:
-    nullable: true
     description: user's car info (included only if isDriver is true)
     properties:
       model: 
