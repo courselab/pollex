@@ -4,7 +4,7 @@ import (
   "fmt"
   "log"
   "github.com/gin-gonic/gin"
-  "github.com/courselab/pollex/pollex-backend/handlers"
+  "github.com/courselab/pollex/pollex-backend/pkg/handlers"
 )
 
 func main() {
