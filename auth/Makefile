@@ -1,0 +1,10 @@
+TEST_TOKEN_KEY=e90d8ea424868fe73be785127a18154e0eda97438ce806c8ddf89e7b842be0d4
+TEST_SERVICE_KEY=5up3r53cur3p4ssw0rd
+
+run: auth
+	TOKEN_KEY=$(TEST_TOKEN_KEY) SERVICE_KEY=$(TEST_SERVICE_KEY) ./auth
+
+auth: main.go auth.go
+	go build
+
+.PHONY: run
