@@ -1,4 +1,4 @@
-package handlers
+package domain
 
 type Car struct {
 	Model        string `json:"model" binding:"required"`

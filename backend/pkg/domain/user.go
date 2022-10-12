@@ -1,4 +1,4 @@
-package handlers
+package domain
 
 type PassengerStats struct {
 	RatingAvg   int32 `json:"ratingAvg" binding:"required"`
@@ -16,8 +16,8 @@ type User struct {
 	Id             int32          `json:"id" binding:"required"`
 	Name           string         `json:"name" binding:"required"`
 	Nickname       string         `json:"nickname" binding:"required"`
-	IsDriver       bool           `json:"isDriver" binding:"required"`
-	DriverStatus   *DriverStats   `json:"driverStats"`
+	IsDriver       bool           `json:"isDriver"`
+	DriverStats    *DriverStats   `json:"driverStats"`
 	PassengerStats PassengerStats `json:"passengerStats" binding:"required"`
 	Car            *Car           `json:"car"`
 }
