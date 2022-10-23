@@ -5,35 +5,34 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/courselab/pollex/pollex-backend/pkg/controllers"
 	"github.com/courselab/pollex/pollex-backend/pkg/domain"
 	"github.com/gin-gonic/gin"
 )
 
-func getUsers(c *gin.Context) {
-	users := controllers.GetUsers()
+func (h *handler) getUsers(c *gin.Context) {
+	users := h.user.GetUsers()
 
 	c.IndentedJSON(http.StatusOK, users)
 }
 
-func getUser(c *gin.Context) {
+func (h *handler) getUser(c *gin.Context) {
 	param := c.Param("id")
-	userId, err := paramToInt(param)
+	userId, err := h.paramToInt(param)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	user, err := controllers.GetUser(int32(*userId))
+	user, err := h.user.GetUser(int32(*userId))
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, user)
+	c.IndentedJSON(http.StatusOK, &user)
 }
 
-func createUser(c *gin.Context) {
+func (h *handler) createUser(c *gin.Context) {
 
 	/*
 		Input example:
@@ -60,23 +59,23 @@ func createUser(c *gin.Context) {
 		return
 	}
 
-	if err := validateDriverConditions(user); err != nil {
+	if err := h.validateDriverConditions(user); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	userCreated, err := controllers.CreateUser(user)
+	userCreated, err := h.user.CreateUser(user)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, userCreated)
+	c.IndentedJSON(http.StatusOK, &userCreated)
 }
 
-func updateUser(c *gin.Context) {
+func (h *handler) updateUser(c *gin.Context) {
 	param := c.Param("id")
-	userId, err := paramToInt(param)
+	userId, err := h.paramToInt(param)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
@@ -88,12 +87,12 @@ func updateUser(c *gin.Context) {
 		return
 	}
 
-	if err := validateDriverConditions(user); err != nil {
+	if err := h.validateDriverConditions(user); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	userUpdated, err := controllers.UpdateUser(int32(*userId), user)
+	userUpdated, err := h.user.UpdateUser(int32(*userId), user)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
@@ -102,15 +101,15 @@ func updateUser(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, userUpdated)
 }
 
-func deleteUser(c *gin.Context) {
+func (h *handler) deleteUser(c *gin.Context) {
 	param := c.Param("id")
-	userId, err := paramToInt(param)
+	userId, err := h.paramToInt(param)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	if err = controllers.DeleteUser(int32(*userId)); err != nil {
+	if err = h.user.DeleteUser(int32(*userId)); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
@@ -118,9 +117,9 @@ func deleteUser(c *gin.Context) {
 	c.String(http.StatusOK, "")
 }
 
-func patchUser(c *gin.Context) {
+func (h *handler) patchUser(c *gin.Context) {
 	param := c.Param("id")
-	userId, err := paramToInt(param)
+	userId, err := h.paramToInt(param)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
@@ -132,12 +131,12 @@ func patchUser(c *gin.Context) {
 		return
 	}
 
-	if err := validateDriverConditions(user); err != nil {
+	if err := h.validateDriverConditions(user); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	userUpdated, err := controllers.PatchUser(int32(*userId), user)
+	userUpdated, err := h.user.PatchUser(int32(*userId), user)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
@@ -146,7 +145,7 @@ func patchUser(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, userUpdated)
 }
 
-func paramToInt(param string) (*int, error) {
+func (h *handler) paramToInt(param string) (*int, error) {
 	paramToInt, err := strconv.Atoi(param)
 	if err != nil {
 		return nil, err
@@ -155,7 +154,7 @@ func paramToInt(param string) (*int, error) {
 	return &paramToInt, nil
 }
 
-func validateDriverConditions(user domain.User) error {
+func (h *handler) validateDriverConditions(user domain.User) error {
 	if user.IsDriver && (user.DriverStats == nil || user.Car == nil) {
 		var err error
 

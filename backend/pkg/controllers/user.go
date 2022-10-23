@@ -2,7 +2,26 @@ package controllers
 
 import "github.com/courselab/pollex/pollex-backend/pkg/domain"
 
-func GetUsers() []domain.User {
+type User interface {
+	GetUsers() []domain.User
+	GetUser(userId int32) (domain.User, error)
+	CreateUser(user domain.User) (*domain.User, error)
+	UpdateUser(userId int32, user domain.User) (domain.User, error)
+	DeleteUser(userId int32) error
+	PatchUser(userId int32, user domain.User) (domain.User, error)
+}
+
+type user struct {
+}
+
+type Params struct {
+}
+
+func NewUserController(p *Params) User {
+	return &user{}
+}
+
+func (u *user) GetUsers() []domain.User {
 
 	// get users from database
 
@@ -46,7 +65,7 @@ func GetUsers() []domain.User {
 	return users
 }
 
-func GetUser(userId int32) (domain.User, error) {
+func (u *user) GetUser(userId int32) (domain.User, error) {
 	// get user from database
 	var user domain.User
 	user.Id = userId
@@ -54,25 +73,25 @@ func GetUser(userId int32) (domain.User, error) {
 	return user, nil
 }
 
-func CreateUser(user domain.User) (domain.User, error) {
+func (u *user) CreateUser(user domain.User) (*domain.User, error) {
 	//create user in the database
 
-	return user, nil
+	return &user, nil
 }
 
-func UpdateUser(userId int32, user domain.User) (domain.User, error) {
+func (u *user) UpdateUser(userId int32, user domain.User) (domain.User, error) {
 	//update user in the database
 
 	return user, nil
 }
 
-func DeleteUser(userId int32) error {
+func (u *user) DeleteUser(userId int32) error {
 	//delete user in the database
 
 	return nil
 }
 
-func PatchUser(userId int32, user domain.User) (domain.User, error) {
+func (u *user) PatchUser(userId int32, user domain.User) (domain.User, error) {
 	// update some user attributes in the database
 
 	return user, nil
