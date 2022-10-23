@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -59,8 +58,6 @@ func TestGetUsers(t *testing.T) {
 
 		var response []domain.User
 		json.Unmarshal(w.Body.Bytes(), &response)
-
-		fmt.Println(mockResponse)
 
 		assert.Equal(t, http.StatusOK, w.Code)
 		assert.Equal(t, mockResponse, response)
@@ -393,8 +390,6 @@ func TestPatchUser(t *testing.T) {
 
 		var response domain.User
 		json.Unmarshal(w.Body.Bytes(), &response)
-
-		fmt.Println(response)
 
 		assert.Equal(t, http.StatusOK, w.Code)
 		assert.Equal(t, mockResponse, response)
