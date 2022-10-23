@@ -4,11 +4,11 @@ import "github.com/courselab/pollex/pollex-backend/pkg/domain"
 
 type User interface {
 	GetUsers() []domain.User
-	GetUser(userId int32) (domain.User, error)
+	GetUser(userId int32) (*domain.User, error)
 	CreateUser(user domain.User) (*domain.User, error)
-	UpdateUser(userId int32, user domain.User) (domain.User, error)
+	UpdateUser(userId int32, user domain.User) (*domain.User, error)
 	DeleteUser(userId int32) error
-	PatchUser(userId int32, user domain.User) (domain.User, error)
+	PatchUser(userId int32, user domain.User) (*domain.User, error)
 }
 
 type user struct {
@@ -65,12 +65,12 @@ func (u *user) GetUsers() []domain.User {
 	return users
 }
 
-func (u *user) GetUser(userId int32) (domain.User, error) {
+func (u *user) GetUser(userId int32) (*domain.User, error) {
 	// get user from database
 	var user domain.User
 	user.Id = userId
 
-	return user, nil
+	return &user, nil
 }
 
 func (u *user) CreateUser(user domain.User) (*domain.User, error) {
@@ -79,10 +79,10 @@ func (u *user) CreateUser(user domain.User) (*domain.User, error) {
 	return &user, nil
 }
 
-func (u *user) UpdateUser(userId int32, user domain.User) (domain.User, error) {
+func (u *user) UpdateUser(userId int32, user domain.User) (*domain.User, error) {
 	//update user in the database
 
-	return user, nil
+	return &user, nil
 }
 
 func (u *user) DeleteUser(userId int32) error {
@@ -91,8 +91,8 @@ func (u *user) DeleteUser(userId int32) error {
 	return nil
 }
 
-func (u *user) PatchUser(userId int32, user domain.User) (domain.User, error) {
+func (u *user) PatchUser(userId int32, user domain.User) (*domain.User, error) {
 	// update some user attributes in the database
 
-	return user, nil
+	return &user, nil
 }

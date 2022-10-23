@@ -98,7 +98,7 @@ func (h *handler) updateUser(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, userUpdated)
+	c.IndentedJSON(http.StatusOK, &userUpdated)
 }
 
 func (h *handler) deleteUser(c *gin.Context) {
@@ -142,7 +142,7 @@ func (h *handler) patchUser(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, userUpdated)
+	c.IndentedJSON(http.StatusOK, &userUpdated)
 }
 
 func (h *handler) paramToInt(param string) (*int, error) {

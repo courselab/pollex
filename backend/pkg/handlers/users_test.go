@@ -86,7 +86,7 @@ func TestGetUser(t *testing.T) {
 			Car: nil,
 		}
 		mockUserController := new(mocks.User)
-		mockUserController.On("GetUser", int32(10)).Return(mockResponse, nil)
+		mockUserController.On("GetUser", int32(10)).Return(&mockResponse, nil)
 
 		handler.user = mockUserController
 
@@ -101,13 +101,27 @@ func TestGetUser(t *testing.T) {
 		assert.Equal(t, mockResponse, response)
 	})
 
-	t.Run("Param invalid", func(t *testing.T) {
+	t.Run("Parameter invalid", func(t *testing.T) {
 		w := httptest.NewRecorder()
 		req, _ := http.NewRequest(http.MethodGet, "/users/fail", nil)
 		router.ServeHTTP(w, req)
 
 		assert.Equal(t, http.StatusBadRequest, w.Code)
 	})
+
+	t.Run("Get user error", func(t *testing.T) {
+		mockUserController := new(mocks.User)
+		mockUserController.On("GetUser", int32(10)).Return(nil, errors.New("get user error"))
+
+		handler.user = mockUserController
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodGet, "/users/10", nil)
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
 }
 
 func TestCreateUser(t *testing.T) {
@@ -174,9 +188,6 @@ func TestCreateUser(t *testing.T) {
 		req, _ := http.NewRequest(http.MethodPost, "/users", bytes.NewBuffer(jsonObject))
 		router.ServeHTTP(w, req)
 
-		var response domain.User
-		json.Unmarshal(w.Body.Bytes(), &response)
-
 		assert.Equal(t, http.StatusBadRequest, w.Code)
 	})
 
@@ -201,6 +212,260 @@ func TestCreateUser(t *testing.T) {
 		w := httptest.NewRecorder()
 		jsonObject, _ := json.Marshal(mockInput)
 		req, _ := http.NewRequest(http.MethodPost, "/users", bytes.NewBuffer(jsonObject))
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+}
+
+func TestUpdateUser(t *testing.T) {
+	router, handler := setupUserTest()
+
+	t.Run("Success", func(t *testing.T) {
+		mockResponse := domain.User{
+			Id:          10,
+			Name:        "Igor",
+			Nickname:    "igorteste",
+			IsDriver:    false,
+			DriverStats: nil,
+			PassengerStats: domain.PassengerStats{
+				RatingAvg:   10,
+				RatingCount: 10,
+				TripCount:   10,
+			},
+			Car: nil,
+		}
+		mockUserController := new(mocks.User)
+		mockUserController.On("UpdateUser", int32(10), mockResponse).Return(&mockResponse, nil)
+
+		handler.user = mockUserController
+
+		w := httptest.NewRecorder()
+		jsonObject, _ := json.Marshal(mockResponse)
+		req, _ := http.NewRequest(http.MethodPut, "/users/10", bytes.NewBuffer(jsonObject))
+		router.ServeHTTP(w, req)
+
+		var response domain.User
+		json.Unmarshal(w.Body.Bytes(), &response)
+
+		assert.Equal(t, http.StatusOK, w.Code)
+		assert.Equal(t, mockResponse, response)
+	})
+
+	t.Run("Parameter invalid", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodPut, "/users/fail", nil)
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
+	t.Run("Invalid input", func(t *testing.T) {
+		requestBody := `{"invalid"}`
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodPut, "/users/10", bytes.NewBuffer([]byte(requestBody)))
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
+	t.Run("Driver conditions not satisfied", func(t *testing.T) {
+		requestBody := domain.User{
+			Id:       10,
+			Name:     "Igor",
+			Nickname: "igorteste",
+			IsDriver: true,
+			DriverStats: &domain.DriverStats{
+				RatingAvg:   10,
+				RatingCount: 10,
+				TripCount:   10,
+			},
+			PassengerStats: domain.PassengerStats{
+				RatingAvg:   10,
+				RatingCount: 10,
+				TripCount:   10,
+			},
+			Car: nil,
+		}
+
+		w := httptest.NewRecorder()
+		jsonObject, _ := json.Marshal(requestBody)
+		req, _ := http.NewRequest(http.MethodPut, "/users/10", bytes.NewBuffer(jsonObject))
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
+	t.Run("Update user error", func(t *testing.T) {
+		mockInput := domain.User{
+			Id:          10,
+			Name:        "Igor",
+			Nickname:    "igorteste",
+			IsDriver:    false,
+			DriverStats: nil,
+			PassengerStats: domain.PassengerStats{
+				RatingAvg:   10,
+				RatingCount: 10,
+				TripCount:   10,
+			},
+			Car: nil,
+		}
+		mockUserController := new(mocks.User)
+		mockUserController.On("UpdateUser", int32(10), mockInput).Return(nil, errors.New("update user error"))
+		handler.user = mockUserController
+
+		w := httptest.NewRecorder()
+		jsonObject, _ := json.Marshal(mockInput)
+		req, _ := http.NewRequest(http.MethodPut, "/users/10", bytes.NewBuffer(jsonObject))
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+}
+
+func TestDeleteUser(t *testing.T) {
+	router, handler := setupUserTest()
+
+	t.Run("Success", func(t *testing.T) {
+
+		mockUserController := new(mocks.User)
+		mockUserController.On("DeleteUser", int32(10)).Return(nil)
+
+		handler.user = mockUserController
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodDelete, "/users/10", nil)
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code)
+	})
+
+	t.Run("Parameter invalid", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodDelete, "/users/fail", nil)
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
+	t.Run("Deleter user error", func(t *testing.T) {
+
+		mockUserController := new(mocks.User)
+		mockUserController.On("DeleteUser", int32(10)).Return(errors.New("delete user error"))
+
+		handler.user = mockUserController
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodDelete, "/users/10", nil)
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+}
+
+func TestPatchUser(t *testing.T) {
+	router, handler := setupUserTest()
+
+	t.Run("Success", func(t *testing.T) {
+		mockResponse := domain.User{
+			Id:          10,
+			Name:        "Igor",
+			Nickname:    "igorteste",
+			IsDriver:    false,
+			DriverStats: nil,
+			PassengerStats: domain.PassengerStats{
+				RatingAvg:   1,
+				RatingCount: 2,
+				TripCount:   1,
+			},
+			Car: nil,
+		}
+		mockUserController := new(mocks.User)
+		mockUserController.On("PatchUser", int32(10), mockResponse).Return(&mockResponse, nil)
+
+		handler.user = mockUserController
+
+		w := httptest.NewRecorder()
+		jsonObject, _ := json.Marshal(mockResponse)
+		req, _ := http.NewRequest(http.MethodPatch, "/users/10", bytes.NewBuffer(jsonObject))
+		router.ServeHTTP(w, req)
+
+		var response domain.User
+		json.Unmarshal(w.Body.Bytes(), &response)
+
+		fmt.Println(response)
+
+		assert.Equal(t, http.StatusOK, w.Code)
+		assert.Equal(t, mockResponse, response)
+	})
+
+	t.Run("Parameter invalid", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodPatch, "/users/fail", nil)
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
+	t.Run("Invalid input", func(t *testing.T) {
+		requestBody := `{"invalid"}`
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodPatch, "/users/10", bytes.NewBuffer([]byte(requestBody)))
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
+	t.Run("Driver conditions not satisfied", func(t *testing.T) {
+		requestBody := domain.User{
+			Id:       10,
+			Name:     "Igor",
+			Nickname: "igorteste",
+			IsDriver: true,
+			DriverStats: &domain.DriverStats{
+				RatingAvg:   10,
+				RatingCount: 10,
+				TripCount:   10,
+			},
+			PassengerStats: domain.PassengerStats{
+				RatingAvg:   10,
+				RatingCount: 10,
+				TripCount:   10,
+			},
+			Car: nil,
+		}
+
+		w := httptest.NewRecorder()
+		jsonObject, _ := json.Marshal(requestBody)
+		req, _ := http.NewRequest(http.MethodPatch, "/users/10", bytes.NewBuffer(jsonObject))
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
+
+	t.Run("Patch user error", func(t *testing.T) {
+		mockInput := domain.User{
+			Id:          10,
+			Name:        "Igor",
+			Nickname:    "igorteste",
+			IsDriver:    false,
+			DriverStats: nil,
+			PassengerStats: domain.PassengerStats{
+				RatingAvg:   1,
+				RatingCount: 2,
+				TripCount:   1,
+			},
+			Car: nil,
+		}
+		mockUserController := new(mocks.User)
+		mockUserController.On("PatchUser", int32(10), mockInput).Return(nil, errors.New("patch user error"))
+		handler.user = mockUserController
+
+		w := httptest.NewRecorder()
+		jsonObject, _ := json.Marshal(mockInput)
+		req, _ := http.NewRequest(http.MethodPatch, "/users/10", bytes.NewBuffer(jsonObject))
 		router.ServeHTTP(w, req)
 
 		assert.Equal(t, http.StatusBadRequest, w.Code)

@@ -50,14 +50,16 @@ func (_m *User) DeleteUser(userId int32) error {
 }
 
 // GetUser provides a mock function with given fields: userId
-func (_m *User) GetUser(userId int32) (domain.User, error) {
+func (_m *User) GetUser(userId int32) (*domain.User, error) {
 	ret := _m.Called(userId)
 
-	var r0 domain.User
-	if rf, ok := ret.Get(0).(func(int32) domain.User); ok {
+	var r0 *domain.User
+	if rf, ok := ret.Get(0).(func(int32) *domain.User); ok {
 		r0 = rf(userId)
 	} else {
-		r0 = ret.Get(0).(domain.User)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*domain.User)
+		}
 	}
 
 	var r1 error
@@ -87,14 +89,16 @@ func (_m *User) GetUsers() []domain.User {
 }
 
 // PatchUser provides a mock function with given fields: userId, user
-func (_m *User) PatchUser(userId int32, user domain.User) (domain.User, error) {
+func (_m *User) PatchUser(userId int32, user domain.User) (*domain.User, error) {
 	ret := _m.Called(userId, user)
 
-	var r0 domain.User
-	if rf, ok := ret.Get(0).(func(int32, domain.User) domain.User); ok {
+	var r0 *domain.User
+	if rf, ok := ret.Get(0).(func(int32, domain.User) *domain.User); ok {
 		r0 = rf(userId, user)
 	} else {
-		r0 = ret.Get(0).(domain.User)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*domain.User)
+		}
 	}
 
 	var r1 error
@@ -108,14 +112,16 @@ func (_m *User) PatchUser(userId int32, user domain.User) (domain.User, error) {
 }
 
 // UpdateUser provides a mock function with given fields: userId, user
-func (_m *User) UpdateUser(userId int32, user domain.User) (domain.User, error) {
+func (_m *User) UpdateUser(userId int32, user domain.User) (*domain.User, error) {
 	ret := _m.Called(userId, user)
 
-	var r0 domain.User
-	if rf, ok := ret.Get(0).(func(int32, domain.User) domain.User); ok {
+	var r0 *domain.User
+	if rf, ok := ret.Get(0).(func(int32, domain.User) *domain.User); ok {
 		r0 = rf(userId, user)
 	} else {
-		r0 = ret.Get(0).(domain.User)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*domain.User)
+		}
 	}
 
 	var r1 error
