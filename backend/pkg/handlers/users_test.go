@@ -116,7 +116,7 @@ func TestGetUser(t *testing.T) {
 		req, _ := http.NewRequest(http.MethodGet, "/users/10", nil)
 		router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusBadRequest, w.Code)
+		assert.Equal(t, http.StatusNotFound, w.Code)
 	})
 
 }

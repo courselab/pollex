@@ -19,13 +19,21 @@ func NewHandler(p *Params) *handler {
 		user: p.User,
 	}
 
-	p.Router.GET("/ping", h.ping)
-	p.Router.GET("/users", h.getUsers)
-	p.Router.GET("/users/:id", h.getUser)
-	p.Router.POST("/users", h.createUser)
-	p.Router.PUT("/users/:id", h.updateUser)
-	p.Router.DELETE("/users/:id", h.deleteUser)
-	p.Router.PATCH("/users/:id", h.patchUser)
+	h.routePing(p.Router)
+	h.routeUsers(p.Router)
 
 	return h
+}
+
+func (h *handler) routePing(router *gin.Engine) {
+	router.GET("/ping", h.ping)
+}
+
+func (h *handler) routeUsers(router *gin.Engine) {
+	router.GET("/users", h.getUsers)
+	router.GET("/users/:id", h.getUser)
+	router.POST("/users", h.createUser)
+	router.PUT("/users/:id", h.updateUser)
+	router.DELETE("/users/:id", h.deleteUser)
+	router.PATCH("/users/:id", h.patchUser)
 }

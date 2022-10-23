@@ -22,8 +22,7 @@ func NewUserController(p *Params) User {
 }
 
 func (u *user) GetUsers() []domain.User {
-
-	// get users from database
+	///TODO: get users from database
 
 	users := []domain.User{
 		{
@@ -66,7 +65,8 @@ func (u *user) GetUsers() []domain.User {
 }
 
 func (u *user) GetUser(userId int32) (*domain.User, error) {
-	// get user from database
+	//TODO: et user from database
+
 	var user domain.User
 	user.Id = userId
 
@@ -74,25 +74,25 @@ func (u *user) GetUser(userId int32) (*domain.User, error) {
 }
 
 func (u *user) CreateUser(user domain.User) (*domain.User, error) {
-	//create user in the database
+	//TODO: create user in the database
 
 	return &user, nil
 }
 
 func (u *user) UpdateUser(userId int32, user domain.User) (*domain.User, error) {
-	//update user in the database
+	//TODO: update user in the database
 
 	return &user, nil
 }
 
 func (u *user) DeleteUser(userId int32) error {
-	//delete user in the database
+	//TODO: delete user in the database
 
 	return nil
 }
 
 func (u *user) PatchUser(userId int32, user domain.User) (*domain.User, error) {
-	// update some user attributes in the database
+	//TODO: update some user attributes in the database
 
 	return &user, nil
 }

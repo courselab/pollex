@@ -25,7 +25,7 @@ func (h *handler) getUser(c *gin.Context) {
 
 	user, err := h.user.GetUser(int32(*userId))
 	if err != nil {
-		c.AbortWithError(http.StatusBadRequest, err)
+		c.AbortWithError(http.StatusNotFound, err)
 		return
 	}
 
