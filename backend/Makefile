@@ -1,4 +1,3 @@
-MOCKERY := $(shell command -v mockery 2> /dev/null)
 MOCKS := User
 
 dev:
@@ -7,9 +6,9 @@ dev:
 coverage:
 	cd pkg/handlers && go test -coverprofile=c.out && go tool cover -html=c.out
 
-mocks: mockery_dep coverage update tidy
+mocks: coverage update
 	cd pkg/controllers && for x in $(MOCKS); do \
-		mockery --name=$$x --filename=$$(echo $$x | tr '[:upper:]' '[:lower:]').go; \
+		go run github.com/vektra/mockery/v2@latest --name=$$x --filename=$$(echo $$x | tr '[:upper:]' '[:lower:]').go; \
 	done
 
 update: tidy
@@ -18,11 +17,3 @@ update: tidy
 tidy:
 	go mod tidy
 
-deps: mockery_dep
-
-mockery_dep:
-ifndef MOCKERY
-	@echo $(MOCKERY)
-	@echo -n "Mockery is not installed. Would you like to install? [y/N] " && read ans && [ $${ans:-N} = y ]
-	go install github.com/vektra/mockery/v2@latest
-endif
