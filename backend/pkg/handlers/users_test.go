@@ -34,7 +34,7 @@ func TestGetUsers(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		mockResponse := []domain.User{
 			{
-				Id:          12,
+				ID:          12,
 				Name:        "Igor Takeo Passenger",
 				Nickname:    "igortakeo_passenger",
 				IsDriver:    false,
@@ -70,7 +70,7 @@ func TestGetUser(t *testing.T) {
 
 	t.Run("Success", func(t *testing.T) {
 		mockResponse := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "",
 			Nickname:    "",
 			IsDriver:    false,
@@ -126,7 +126,7 @@ func TestCreateUser(t *testing.T) {
 
 	t.Run("Success", func(t *testing.T) {
 		mockResponse := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "Igor",
 			Nickname:    "igorteste",
 			IsDriver:    false,
@@ -167,7 +167,7 @@ func TestCreateUser(t *testing.T) {
 
 	t.Run("Driver conditions not satisfied", func(t *testing.T) {
 		requestBody := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "Igor",
 			Nickname:    "igorteste",
 			IsDriver:    true,
@@ -190,7 +190,7 @@ func TestCreateUser(t *testing.T) {
 
 	t.Run("Create user error", func(t *testing.T) {
 		mockInput := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "Igor",
 			Nickname:    "igorteste",
 			IsDriver:    false,
@@ -220,7 +220,7 @@ func TestUpdateUser(t *testing.T) {
 
 	t.Run("Success", func(t *testing.T) {
 		mockResponse := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "Igor",
 			Nickname:    "igorteste",
 			IsDriver:    false,
@@ -269,7 +269,7 @@ func TestUpdateUser(t *testing.T) {
 
 	t.Run("Driver conditions not satisfied", func(t *testing.T) {
 		requestBody := domain.User{
-			Id:       10,
+			ID:       10,
 			Name:     "Igor",
 			Nickname: "igorteste",
 			IsDriver: true,
@@ -296,7 +296,7 @@ func TestUpdateUser(t *testing.T) {
 
 	t.Run("Update user error", func(t *testing.T) {
 		mockInput := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "Igor",
 			Nickname:    "igorteste",
 			IsDriver:    false,
@@ -366,7 +366,7 @@ func TestPatchUser(t *testing.T) {
 
 	t.Run("Success", func(t *testing.T) {
 		mockResponse := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "Igor",
 			Nickname:    "igorteste",
 			IsDriver:    false,
@@ -415,7 +415,7 @@ func TestPatchUser(t *testing.T) {
 
 	t.Run("Driver conditions not satisfied", func(t *testing.T) {
 		requestBody := domain.User{
-			Id:       10,
+			ID:       10,
 			Name:     "Igor",
 			Nickname: "igorteste",
 			IsDriver: true,
@@ -442,7 +442,7 @@ func TestPatchUser(t *testing.T) {
 
 	t.Run("Patch user error", func(t *testing.T) {
 		mockInput := domain.User{
-			Id:          10,
+			ID:          10,
 			Name:        "Igor",
 			Nickname:    "igorteste",
 			IsDriver:    false,

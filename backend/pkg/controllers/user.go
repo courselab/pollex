@@ -26,7 +26,7 @@ func (u *user) GetUsers() []domain.User {
 
 	users := []domain.User{
 		{
-			Id:          1223,
+			ID:          1223,
 			Name:        "Igor Takeo Passenger",
 			Nickname:    "igortakeo_passenger",
 			IsDriver:    false,
@@ -39,7 +39,7 @@ func (u *user) GetUsers() []domain.User {
 			Car: nil,
 		},
 		{
-			Id:       1224,
+			ID:       1224,
 			Name:     "Igor Takeo Driver",
 			Nickname: "igortakeo_driver",
 			IsDriver: true,
@@ -68,7 +68,7 @@ func (u *user) GetUser(userId int32) (*domain.User, error) {
 	//TODO: et user from database
 
 	var user domain.User
-	user.Id = userId
+	user.ID = userId
 
 	return &user, nil
 }
