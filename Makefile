@@ -2,7 +2,7 @@ docker:
 	docker-compose up -d --scale backend=3
 
 dev_server:
-	make -C backend dev
+	make -C backend run
 auth_server:
 	make -C auth run
 

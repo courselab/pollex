@@ -1,10 +1,12 @@
 MOCKS := User
 
-dev: backend
+srcs=$(shell find . -type f -name '*.go')
+
+run: backend
 	./backend
 
-backend:
-	go build -o backend cmd/server/main.go
+backend: $(srcs)
+	go build -o backend ./cmd/server
 
 coverage:
 	cd pkg/handlers && go test -coverprofile=c.out && go tool cover -html=c.out
@@ -19,3 +21,5 @@ update: tidy
 
 tidy:
 	go mod tidy
+
+.PHONY: coverage dev mocks update tidy
