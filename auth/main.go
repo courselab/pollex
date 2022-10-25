@@ -34,7 +34,7 @@ func main() {
     // to prevent impersonation in case this service is exposed to the internet
     serviceKey := os.Getenv("SERVICE_KEY")
 
-    auth, err := NewAuth(parseAuthKey(tokenKey))
+    auth, err := MakeAuth(parseAuthKey(tokenKey))
     if err != nil {
         log.Fatal(err)
     }

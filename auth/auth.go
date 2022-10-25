@@ -36,7 +36,7 @@ func allZero(data []byte) bool {
     return true
 }
 
-func NewAuth(key [keySize]byte) (*Auth, error) {
+func MakeAuth(key [keySize]byte) (*Auth, error) {
     if allZero(key[:]) {
         return nil, fmt.Errorf("All key bytes are zero")
     }
