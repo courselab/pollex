@@ -1,7 +1,10 @@
 MOCKS := User
 
-dev:
-	go run cmd/server/main.go
+dev: backend
+	./backend
+
+backend:
+	go build -o backend cmd/server/main.go
 
 coverage:
 	cd pkg/handlers && go test -coverprofile=c.out && go tool cover -html=c.out
@@ -16,4 +19,3 @@ update: tidy
 
 tidy:
 	go mod tidy
-
