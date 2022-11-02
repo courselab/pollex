@@ -15,8 +15,6 @@ services:
     backend:
         build: ./backend
         hostname: backend
-        labels:
-            - traefik.http.routers.whoami.rule=Host(`backend.localhost`)
 #        depends_on:
 #            - auth
 #            - db
@@ -29,3 +27,18 @@ services:
             DB_USER: postgres
             DB_PASSWORD: postgres
             DB_NAME: postgres
+
+    loadbalancer:
+        image: nginx:latest
+        hostname: loadbalancer
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+        depends_on:
+            -   backend
+        ports:
+            -   "42069:42069"
+
+networks:
+    default:
+        name: backend
+        driver: bridge
