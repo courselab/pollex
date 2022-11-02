@@ -14,6 +14,12 @@ type DriverStats struct {
 	TripCount   int32 `json:"tripCount" binding:"required"`
 }
 
+type Car struct {
+	car_model string 'json:"carModel"'
+	car_color string 'json:"carColor"'
+	car_licensePlate string 'json:"carLicencePlate"'
+}
+
 type User struct {
 	gorm.Model
 	ID             int32           `json:"id" binding:"required"`
