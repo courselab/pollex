@@ -1,7 +1,13 @@
 package domain
 
+import (
+	geom "github.com/twpayne/go-geom"
+	"gorm.io/gorm"
+)
+
 type Locations struct {
-	Id     int32  `json:"id" binding:"required"`
-	Name   string `json:"name" binding:"required"`
-	Coords Point  `json:"coords" binding:"required"`
+	gorm.Model
+	Id     int32      `json:"id" binding:"required" gorm:"primaryKey"`
+	Name   string     `json:"name" binding:"required"`
+	Coords geom.Point `json:"coords" binding:"required"`
 }

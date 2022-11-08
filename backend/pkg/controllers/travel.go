@@ -14,10 +14,10 @@ type Travel interface {
 type travel struct {
 }
 
-type Params struct {
+type ParamsTravels struct {
 }
 
-func NewTravelController(p *Params) Travel {
+func NewTravelController(p *ParamsTravels) Travel {
 	return &travel{}
 }
 

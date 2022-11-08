@@ -14,10 +14,10 @@ type User interface {
 type user struct {
 }
 
-type Params struct {
+type UserParams struct {
 }
 
-func NewUserController(p *Params) User {
+func NewUserController(p *UserParams) User {
 	return &user{}
 }
 
