@@ -3,6 +3,9 @@ services:
     auth:
         build: ./auth
         hostname: auth
+        environment:
+            TOKEN_KEY: "${TOKEN_KEY}"
+            SERVICE_KEY: "${SERVICE_KEY}"
     db:
         image: postgres:13
         hostname: db
