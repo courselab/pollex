@@ -21,7 +21,7 @@ func setupUserTest() (*gin.Engine, *handler) {
 	router := gin.Default()
 	h := NewHandler(&Params{
 		Router: router,
-		User:   controllers.NewUserController(&controllers.Params{}),
+		User:   controllers.NewUserController(&controllers.UserParams{}),
 	})
 
 	return router, h
