@@ -12,8 +12,9 @@ import (
 func main() {
 	router := gin.Default()
 	handlers.NewHandler(&handlers.Params{
-		Router: router,
-		User:   controllers.NewUserController(&controllers.Params{}),
+		Router:    router,
+		User:      controllers.NewUserController(&controllers.UserParams{}),
+		Locations: controllers.NewLocationsController(&controllers.LocationsParams{}),
 	})
 
 	fmt.Println("Starting server on http://localhost:8080")
