@@ -37,13 +37,13 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public."user"
     OWNER to postgres;
 	
--- Table: public.card
+-- Table: public.car
 CREATE TABLE IF NO EXISTS public.car
 (
     car_licensePlate    character   varying(50) COLLATE pg_catalog."default",
     car_model           character   varying(50) COLLATE pg_catalog."default",
     car_color           character   varying(50) COLLATE pg_catalog."default",
-    CONSTAINT car_pk PRIMARY KEY (car_licensePlate)
+    CONSTRAINT car_pk PRIMARY KEY (car_licensePlate)
 )
 -- Table: public.locations
 
