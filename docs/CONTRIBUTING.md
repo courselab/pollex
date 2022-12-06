@@ -56,6 +56,10 @@ able to handle timely, please, try to reassign it to someone else.
 
 AUTHORS, NEWS and ChangeLog files should be kept up-to-date.
 
+Symbol and comments in the source code must be in English.
+
+If possible, please use English also for issues, discussions etc.
+
 It should be needless to say, but do not commit unnecessary files.
 
 ## References
