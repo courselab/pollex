@@ -1,0 +1,57 @@
+get:
+  summary: Get trip data by ID
+  operationId: getTrip
+  tags: 
+    -  Trips
+  parameters:
+    - name: id
+      in: path
+      schema: 
+        type: number
+  responses: 
+    200:
+      description: Ok
+      content: 
+        application/json:
+          schema:
+            $ref: '../../schemas/trip.yml'
+    401:
+      $ref: ../../responses/401.yml
+    403:
+      $ref: ../../responses/403.yml
+patch: 
+  summary: Update trip data
+  operationId: patchTrips
+  tags: 
+    -  Trips
+  parameters:
+    - name: id
+      in: path
+      schema: 
+        type: number
+  requestBody: 
+    content: 
+      application/json:
+        schema: 
+          oneOf:
+            - properties:
+                driverRating:
+                  description: Rating given by the driver
+                  type: number
+                  nullable: true
+                  minimum: 0
+                  maximum: 5
+            - properties: 
+                passengerRating:
+                  description: Rating given by the passenger
+                  type: number
+                  nullable: true
+                  minimum: 0
+                  maximum: 5
+  responses:
+    200: 
+      description: Ok
+    401:
+      $ref: ../../responses/401.yml
+    403:
+      $ref: ../../responses/403.yml

@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: API
+  description: API
+  version: 1.0.0
+  license: 
+    name: GPL 3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+servers: 
+  - url: http://123
+paths:
+  /user:
+    $ref: 'paths/user/user.yml'
+  /trips:
+    $ref: 'paths/trips/trips.yml'
+  /trips/{id}:
+    $ref: 'paths/trips/trip_id.yml'
