@@ -1,0 +1,45 @@
+﻿Documentação do protótipo do aplicativo Pollex
+
+
+        Ele se encontra em https://www.figma.com/file/WZ9nBdKZxM4PMDLamx7GNh/Voyage-1.1?node-id=0%3A1&t=lGexPAJr61AMVD6p-1
+
+
+        Ele serve para guiar os desenvolvedores do front-end ao indicar como deve ficar cada tela da aplicação
+
+
+        Login: Deve haver duas caixas de texto para receber as entradas de usuário e senha USP. O botão Login deve autenticar o usuário. Se não houver autenticação, o usuário não pode prosseguir para as próximas telas.
+
+
+        Oferecer carona: O usuário deve poder alternar entre Oferecer e Receber. Deve haver duas caixas de texto para se inserir o número de vagas disponível e o horário de saída. Deve haver 7 opções, sendo que exatamente uma deve ser selecionada para se prosseguir, clicando no botão Enviar.
+
+
+        Buscar carona: O usuário deve poder alternar entre Oferecer e Receber. Deve haver três caixas de texto para se inserir o número de vagas disponível, e intervalo dos horários de saída. Deve haver 7 opções, sendo que exatamente uma deve ser selecionada para se prosseguir, clicando no botão Buscar.
+
+
+        Visualizar resultados: Deve-se exibir as caronas encontradas, indicando número de vagas, horário e local de saída e a nota do motorista. Para cada carona, deve haver um botão Pedir, para solicitar a carona.
+
+
+        Sem resultados: Se não houver caronas segundo os critérios especificados, deve-se exibir uma mensagem de erro.
+        
+        Solicitação de carona: Quando um passageiro pedir carona a um motorista, para o motorista, na tela Oferecer deve aparecer uma mensagem mostrando o nome do passageiro, sua nota, quantas vagas quer, e o horário e local da carona postada. Deve haver dois botões Aceitar e Recusar.
+
+
+        Sucesso no pedido: Se o motorista aceitar, o passageiro deve ver na tela Receber uma mensagem de sucesso.
+
+
+        Fracasso no pedido: Se o motorista recusar, o passageiro deve ver na tela Receber uma mensagem de fracasso.
+
+
+        Histórico - Oferecidas: Deve-se exibir o nome e a nota do motorista, e uma lista com as caronas já oferecidas, contendo data, horário, local, e nota recebida. Se o passageiro não avaliou o motorista, deve aparecer uma mensagem de que não foi avaliado. Deve ser possível avaliar o passageiro com um botão Avaliar. Após a avaliação, no lugar do botão deve aparecer as estrelas com a nota. 
+
+
+        Histórico - Recebidas: Deve-se exibir o nome e a nota do passageiro, e uma lista com as caronas já recebidas, contendo data, horário, local, e nota recebida. Se o motorista não avaliou o passageiro, deve aparecer uma mensagem de que não foi avaliado. Deve ser possível avaliar o motorista com um botão Avaliar. Após a avaliação, no lugar do botão deve aparecer as estrelas com a nota. 
+
+
+        Avaliar passageiro: Após o motorista clicar no botão Avaliar na tela anterior, deve haver cinco estrelas vazias, sendo que cada vez que se clica em uma delas, as estrelas devem ser preenchidas até a estrela clicada. Ao se clicar em Avaliar, deve-se atualizar a nota do passageiro de acordo com a nova avaliação.
+
+
+Avaliar motorista: Após o passageiro clicar no botão Avaliar na tela anterior, deve haver cinco estrelas vazias, sendo que cada vez que se clica em uma delas, as estrelas devem ser preenchidas até a estrela clicada. Ao se clicar em Avaliar, deve-se atualizar a nota do motorista de acordo com a nova avaliação.
+
+
+Configurações: Deve aparecer o nome e número USP do usuário, uma caixa que pode ser marcada para se receber notificações do aplicativo, como solicitações de carona, sucesso ou fracasso na solicitação. Deve haver um botão de Logout, que leva à tela Login.
