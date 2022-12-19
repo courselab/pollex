@@ -18,14 +18,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
   },
+  login: {
+    fontSize: 14,
+    marginBottom: 10,
+  },
 })
 
 const Home = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
-    <Text style={styles.title}>Home</Text>
+    <Text style={styles.login}>Login</Text>
+    <input type="text" />
+    <Text style={styles.login}>Senha</Text>
+    <input />
     <Button
-      title="Go to Details"
+      title="Login"
       color="white"
       backgroundColor={colors.lightPurple}
       onPress={() => {

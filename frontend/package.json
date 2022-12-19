@@ -40,7 +40,8 @@
     "react-native-web": "0.17.1",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
