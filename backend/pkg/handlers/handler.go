@@ -23,6 +23,7 @@ func NewHandler(p *Params) *handler {
 	}
 
 	h.routePing(p.Router)
+    h.routeLogin(p.Router)
 	h.routeUsers(p.Router)
 	h.routeLocations(p.Router)
 
@@ -31,6 +32,11 @@ func NewHandler(p *Params) *handler {
 
 func (h *handler) routePing(router *gin.Engine) {
 	router.GET("/ping", h.ping)
+}
+
+func (h *handler) routeLogin(router *gin.Engine) {
+    router.GET("/login/google", h.googleLogin)
+    router.POST("/login/google/callback", h.googleLoginCallback)
 }
 
 func (h *handler) routeUsers(router *gin.Engine) {

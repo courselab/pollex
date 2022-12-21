@@ -8,6 +8,8 @@ RUN ["make", "backend"]
 FROM scratch
 
 WORKDIR /app
+
+COPY --from=builder /app/assets ./
 COPY --from=builder /app/backend ./
 
 ENV GIN_MODE=release
