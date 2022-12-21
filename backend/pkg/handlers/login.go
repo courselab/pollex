@@ -2,6 +2,7 @@ package handlers
 
 import (
     "bytes"
+    _ "embed"
     "encoding/json"
     "fmt"
     "io"
@@ -19,6 +20,10 @@ var (
     gsuiteDomain   string
     authBaseUrl    *url.URL
     authServiceKey string
+    loginPage      []byte
+    //can't use .. to point to the assets folder because golang:tm:
+    //go:embed google.html
+    loginPageRaw   []byte
 )
 
 func init() {
@@ -45,6 +50,12 @@ func init() {
             panic("Missing AUTH_SERVICE_KEY")
         }
     }
+
+    domain := os.Getenv("ORIGIN")
+    if domain == "" {
+        domain = "http://localhost:8080"
+    }
+    loginPage = bytes.Replace(loginPageRaw, []byte("%ORIGIN%"), []byte(domain), -1)
 }
 
 type googleInfo struct {
@@ -116,7 +127,7 @@ func validateGoogleJWT(raw string) (*googleInfo, error) {
 }
 
 func (h *handler) googleLogin(c *gin.Context) {
-    c.File("assets/login/google.html")
+    c.Data(200, "text/html", loginPage)
 }
 
 func (h *handler) googleLoginCallback(c *gin.Context) {
