@@ -1,8 +1,10 @@
+srcs=$(shell find . -type f -name '*.go')
+
 run: auth .credentials
 	@echo Service key is $$(grep -oP 'TEST_SERVICE_KEY=\K(.+)' .credentials)
 	@TOKEN_KEY=$$(grep -oP 'TEST_TOKEN_KEY=\K(.+)' .credentials) SERVICE_KEY=$$(grep -oP 'TEST_SERVICE_KEY=\K(.+)' .credentials) ./auth
 
-auth: main.go auth.go
+auth: $(srcs)
 	go build
 
 .credentials:

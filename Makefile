@@ -6,7 +6,7 @@ docker: .test-env
 	grep -oP 'TEST_\K(.+)' auth/.credentials > .test-env
 
 dev_server:
-	make -C backend dev
+	make -C backend run
 auth_server:
 	make -C auth run
 
