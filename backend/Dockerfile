@@ -8,6 +8,9 @@ RUN ["make", "backend"]
 FROM scratch
 
 WORKDIR /app
+
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /app/assets ./assets
 COPY --from=builder /app/backend ./
 
 ENV GIN_MODE=release

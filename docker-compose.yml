@@ -24,12 +24,14 @@ services:
         ports:
             -   "8080"
         environment:
-            AUTH_HOST: auth
             AUTH_SERVICE_URL: http://auth:6969
+            AUTH_SERVICE_KEY: "${SERVICE_KEY}"
             DB_HOST: db
             DB_USER: postgres
             DB_PASSWORD: postgres
             DB_NAME: postgres
+            GOOGLE_CLIENT_ID: "291003615191-gnbavl5ddf5pf2veqj10c1li0d9nf5u6.apps.googleusercontent.com"
+            ORIGIN: "http://localhost:42069"
 
     loadbalancer:
         image: nginx:latest

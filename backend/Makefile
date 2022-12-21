@@ -22,4 +22,7 @@ update: tidy
 tidy:
 	go mod tidy
 
-.PHONY: coverage dev mocks update tidy
+test:
+	AUTH_SERVICE_URL=UNIT_TEST GOOGLE_CLIENT_ID=UNIT_TEST go test -v ./pkg/...
+
+.PHONY: coverage dev mocks update tidy test
