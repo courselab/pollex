@@ -1,9 +1,6 @@
 package handlers
 
 import (
-    "net/url"
-    "os"
-
 	"github.com/courselab/pollex/pollex-backend/pkg/controllers"
 	"github.com/gin-gonic/gin"
 )
@@ -44,15 +41,9 @@ func (h *handler) routeLogin(router *gin.Engine) {
 func (h *handler) authenticatedRoutes(router *gin.Engine) {
     group := router.Group("/")
 
-    //TODO: figure out a better place for this configuration
-    base := os.Getenv("AUTH_SERVICE_URL")
-    if base != "UNIT_TEST" {
-        baseUrl, err := url.Parse(base)
-        if len(base) == 0 || err != nil {
-            panic("Invalid or missing auth service base url")
-        }
-
-        group.Use(checkAuth(baseUrl))
+    //nil only in unit tests
+    if authBaseUrl != nil {
+        group.Use(checkAuth(authBaseUrl))
     }
 
     h.routeUsers(group)

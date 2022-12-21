@@ -1,6 +1,7 @@
 package handlers
 
 import (
+    "bytes"
     "encoding/json"
     "fmt"
     "io"
@@ -16,9 +17,12 @@ import (
 var (
     googleClientId string
     gsuiteDomain   string
+    authBaseUrl    *url.URL
+    authServiceKey string
 )
 
 func init() {
+    //TODO: figure out a better place for this configuration
     googleClientId = os.Getenv("GOOGLE_CLIENT_ID")
     if googleClientId == "" {
         panic("Missing GOOGLE_CLIENT_ID environment variable")
@@ -26,6 +30,20 @@ func init() {
     gsuiteDomain = os.Getenv("GSUITE_DOMAIN")
     if gsuiteDomain == "" {
         log.Println("GSUITE_DOMAIN not set, accepting any google account")
+    }
+    base := os.Getenv("AUTH_SERVICE_URL")
+    if base != "UNIT_TEST" {
+        baseUrl, err := url.Parse(base)
+        if len(base) == 0 || err != nil {
+            panic("Invalid or missing AUTH_SERVICE_URL")
+        }
+
+        authBaseUrl = baseUrl
+
+        authServiceKey = os.Getenv("AUTH_SERVICE_KEY")
+        if authServiceKey == "" {
+            panic("Missing AUTH_SERVICE_KEY")
+        }
     }
 }
 
@@ -125,15 +143,35 @@ func (h *handler) googleLoginCallback(c *gin.Context) {
     }
     claims, err := validateGoogleJWT(token)
     if err != nil {
-        c.AbortWithError(http.StatusBadRequest, err)
+        c.AbortWithError(http.StatusBadRequest, fmt.Errorf("Invalid google JWT: %w", err))
         return
     }
-    _ = claims
 
-    c.JSON(200, map[string]interface{} {
-        "query": c.Request.URL.Query(),
-        "headers": c.Request.Header,
-        "body": string(body),
-    })
+    body, err = json.Marshal(claims)
+    if err != nil {
+        c.AbortWithError(http.StatusInternalServerError, err)
+        return
+    }
+    req, err := http.NewRequest("POST", authBaseUrl.String() + "/generate", bytes.NewReader(body))
+    if err != nil {
+        c.AbortWithError(http.StatusInternalServerError, err)
+        return
+    }
+    req.Header.Add("Authorization", authServiceKey)
+
+    resp, err := http.DefaultClient.Do(req)
+    if err != nil {
+        c.AbortWithError(http.StatusInternalServerError, fmt.Errorf("Failed to create token: %w", err))
+        return
+    }
+    defer resp.Body.Close()
+
+    body, err = io.ReadAll(resp.Body)
+    if err != nil {
+        c.AbortWithError(http.StatusInternalServerError, fmt.Errorf("Failed to create token: %w", err))
+        return
+    }
+
+    c.Data(200, "application/json", body)
 }
 
