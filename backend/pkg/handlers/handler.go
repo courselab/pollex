@@ -1,6 +1,9 @@
 package handlers
 
 import (
+    "net/url"
+    "os"
+
 	"github.com/courselab/pollex/pollex-backend/pkg/controllers"
 	"github.com/gin-gonic/gin"
 )
@@ -24,8 +27,7 @@ func NewHandler(p *Params) *handler {
 
 	h.routePing(p.Router)
     h.routeLogin(p.Router)
-	h.routeUsers(p.Router)
-	h.routeLocations(p.Router)
+    h.authenticatedRoutes(p.Router)
 
 	return h
 }
@@ -39,7 +41,25 @@ func (h *handler) routeLogin(router *gin.Engine) {
     router.POST("/login/google/callback", h.googleLoginCallback)
 }
 
-func (h *handler) routeUsers(router *gin.Engine) {
+func (h *handler) authenticatedRoutes(router *gin.Engine) {
+    group := router.Group("/")
+
+    //TODO: figure out a better place for this configuration
+    base := os.Getenv("AUTH_SERVICE_URL")
+    if base != "UNIT_TEST" {
+        baseUrl, err := url.Parse(base)
+        if len(base) == 0 || err != nil {
+            panic("Invalid or missing auth service base url")
+        }
+
+        group.Use(checkAuth(baseUrl))
+    }
+
+    h.routeUsers(group)
+	h.routeLocations(group)
+}
+
+func (h *handler) routeUsers(router *gin.RouterGroup) {
 	router.GET("/users", h.getUsers)
 	router.GET("/users/:id", h.getUser)
 	router.POST("/users", h.createUser)
@@ -48,6 +68,6 @@ func (h *handler) routeUsers(router *gin.Engine) {
 	router.PATCH("/users/:id", h.patchUser)
 }
 
-func (h *handler) routeLocations(router *gin.Engine) {
+func (h *handler) routeLocations(router *gin.RouterGroup) {
 	router.GET("/locations", h.getLocations)
 }
